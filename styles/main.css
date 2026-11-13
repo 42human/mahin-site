@@ -3,9 +3,7 @@
    Faithfully recreated design system, typography, motion & micro-interactions
    ========================================================================== */
 
-/* Fonts are loaded with <link rel="preconnect"> + <link rel="stylesheet"> in
-   each page's <head>. An @import here made the browser discover the font
-   stylesheet a full round trip late, so headlines flashed a fallback face. */
+@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
   --token-bg: #000000;
@@ -29,30 +27,10 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  /* The custom inverted dot replaces the native cursor everywhere */
+  cursor: none !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* The inverted dot only replaces the native cursor on a real pointer, and only
-   once scripts/main.js has confirmed the dot exists. If the script fails, the
-   browser blocks it, or the visitor is on a touch screen, the normal cursor
-   comes back instead of leaving the whole site with no pointer at all. */
-@media (pointer: fine) {
-  html.has-custom-cursor,
-  html.has-custom-cursor * {
-    /* Scoped !important: individual rules further down set cursor: pointer
-       (the hamburger), which would otherwise paint a second, native arrow
-       next to the dot. */
-    cursor: none !important;
-  }
-}
-
-/* Keyboard focus is always visible. The dot replaces the pointer, never the
-   focus ring — without this, tabbing through the site is invisible. */
-:focus-visible {
-  outline: 2px solid var(--token-accent);
-  outline-offset: 4px;
-  border-radius: 2px;
 }
 
 html {
@@ -131,6 +109,7 @@ button {
   border: none;
   color: inherit;
   font: inherit;
+  outline: none;
 }
 
 /* Custom Scrollbar */
@@ -199,14 +178,6 @@ body.cursor-hover .cursor-dot {
 .site-loader.loaded {
   transform: translateY(-100%);
   pointer-events: none;
-  visibility: hidden;
-  transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1), visibility 0s linear 0.85s;
-}
-
-/* Without JS there is nothing to dismiss the loader, which would leave it
-   covering the entire site forever. It only ever shows when JS is running. */
-html:not(.js) .site-loader {
-  display: none;
 }
 
 .loader-content {
@@ -294,6 +265,7 @@ html:not(.js) .site-loader {
   cursor: pointer;
   background: none;
   border: none;
+  outline: none;
   color: inherit;
   flex-shrink: 0;
 }
@@ -332,17 +304,12 @@ html:not(.js) .site-loader {
   gap: 40px;
   opacity: 0;
   pointer-events: none;
-  /* Truly hidden, not just transparent: otherwise the closed drawer's links
-     stay in the tab order and keyboard focus disappears off-screen. */
-  visibility: hidden;
-  transition: opacity 0.4s var(--ease-out-expo), visibility 0s linear 0.4s;
+  transition: opacity 0.4s var(--ease-out-expo);
 }
 
 .mobile-nav-drawer.open {
   opacity: 1;
   pointer-events: all;
-  visibility: visible;
-  transition: opacity 0.4s var(--ease-out-expo), visibility 0s linear 0s;
 }
 
 .mobile-nav-drawer .nav-link {
@@ -948,6 +915,17 @@ html:not(.js) .site-loader {
   padding: 140px 40px 80px;
 }
 
+.gallery-notice {
+  font-family: var(--font-body);
+  font-size: clamp(14px, 1.6vw, 20px);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--token-text-muted);
+  margin-bottom: 56px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 .gallery-heading {
   font-family: var(--font-body);
   font-size: clamp(40px, 6vw, 84px);
@@ -984,6 +962,40 @@ html:not(.js) .site-loader {
 
 .gallery-card:hover img {
   transform: scale(1.04);
+}
+
+/* Mobile notice overlay for gallery */
+.gallery-mobile-notice {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: #000;
+  z-index: 10000;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 40px;
+  text-align: center;
+}
+
+.gallery-mobile-notice h2 {
+  font-family: var(--font-body);
+  font-size: clamp(24px, 5vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.gallery-mobile-notice p {
+  font-size: 16px;
+  color: var(--token-text-muted);
+}
+
+@media (max-width: 768px) {
+  .gallery-mobile-notice {
+    display: flex;
+  }
 }
 
 /* ==========================================================================
@@ -1109,35 +1121,5 @@ html:not(.js) .site-loader {
 @media (max-width: 540px) {
   .gallery-masonry {
     columns: 1;
-  }
-}
-
-/* ==========================================================================
-   REDUCED MOTION
-   Respect the OS "reduce motion" setting for the decorative, continuously
-   moving pieces. Scroll feel and hover feedback are left intact.
-   ========================================================================== */
-@media (prefers-reduced-motion: reduce) {
-  .hero-title-wrap {
-    animation: none;
-  }
-
-  /* Stop the endless ticker and show each unique logo once, wrapped */
-  .marquee-track {
-    animation: none;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .marquee-track .marquee-item:nth-child(n + 6) {
-    display: none;
-  }
-
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }

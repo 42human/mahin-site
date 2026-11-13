@@ -2,21 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Lets the stylesheet know JS is running, so the intro loader is only
-       allowed to cover the page when the script that dismisses it exists. -->
-  <script>document.documentElement.classList.add('js');</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>mahin - official website</title>
   <meta name="description" content="the official creative portfolio of mahin, a multidisciplinary digital creative.">
-  <meta name="theme-color" content="#000000">
   <link rel="icon" href="assets/favicon-light.svg?v=3" media="(prefers-color-scheme: light)">
   <link rel="icon" href="assets/favicon-dark.svg?v=3" media="(prefers-color-scheme: dark)">
-  <!-- Connect to the font hosts before the stylesheets load: the typefaces are
-       the entire design, and discovering them late painted a fallback face
-       first on every visit. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Inter:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body id="top">
@@ -25,7 +15,7 @@
   <div class="cursor-dot"></div>
 
   <!-- Interactive Screen Loader -->
-  <div class="site-loader" id="siteLoader" aria-hidden="true">
+  <div class="site-loader" id="siteLoader">
     <div class="loader-content">
       <div class="loader-number" id="loaderNumber">0%</div>
       <div class="loader-bar-wrap">
@@ -39,7 +29,7 @@
     <a href="index.html" class="navbar-logo" aria-label="mahin logo">
       <span class="navbar-logo-text">mahin™</span>
     </a>
-    <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
+    <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle navigation menu">
       <span></span>
       <span></span>
       <span></span>

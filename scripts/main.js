@@ -92,24 +92,9 @@ function initLoader() {
 
   if (!loader || !loaderNum || !loaderBar) return;
 
-  // sessionStorage throws in some privacy modes; a storage failure must never
-  // take the loader (and therefore the whole page) down with it.
-  let alreadyVisited = false;
-  try {
-    alreadyVisited = sessionStorage.getItem('mahin_visited') === 'true';
-  } catch (err) {
-    alreadyVisited = false;
-  }
-
-  // The intro is a first-impression moment, not a toll booth on every click.
-  // Once it has played, later pages in the session open straight away.
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (alreadyVisited || reduceMotion) {
-    loader.classList.add('loaded');
-    return;
-  }
-
-  const duration = 1300;
+  // If visited within current session, load faster
+  const alreadyVisited = sessionStorage.getItem('mahin_visited');
+  const duration = alreadyVisited ? 650 : 1300;
 
   let current = 0;
   const startTime = performance.now();
@@ -132,11 +117,7 @@ function initLoader() {
       loaderBar.style.width = '100%';
       setTimeout(() => {
         loader.classList.add('loaded');
-        try {
-          sessionStorage.setItem('mahin_visited', 'true');
-        } catch (err) {
-          // Storage unavailable — the intro simply plays again next time
-        }
+        sessionStorage.setItem('mahin_visited', 'true');
       }, 150);
     }
   }
@@ -152,12 +133,7 @@ function initLoader() {
 function initCursor() {
   const dot = document.querySelector('.cursor-dot');
 
-  // No dot element, or no mouse to replace (phones, tablets, touch laptops):
-  // leave the native cursor alone. The stylesheet only hides it once this
-  // class is present, so a failure here degrades to a normal cursor.
-  if (!dot || !window.matchMedia('(pointer: fine)').matches) return;
-
-  document.documentElement.classList.add('has-custom-cursor');
+  if (!dot) return;
 
   window.addEventListener('mousemove', (e) => {
     // Move to pointer, then offset by half the dot size to center it
@@ -185,10 +161,9 @@ function initMobileNav() {
   if (!toggleBtn || !drawer) return;
 
   toggleBtn.addEventListener('click', () => {
-    const isOpen = !drawer.classList.contains('open');
-    toggleBtn.classList.toggle('open', isOpen);
-    drawer.classList.toggle('open', isOpen);
-    toggleBtn.setAttribute('aria-expanded', String(isOpen));
+    toggleBtn.classList.toggle('open');
+    drawer.classList.toggle('open');
+    const isOpen = drawer.classList.contains('open');
     document.body.style.overflow = isOpen ? 'hidden' : '';
     if (window.__lenis) isOpen ? window.__lenis.stop() : window.__lenis.start();
   });
@@ -197,7 +172,6 @@ function initMobileNav() {
     link.addEventListener('click', () => {
       toggleBtn.classList.remove('open');
       drawer.classList.remove('open');
-      toggleBtn.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
       if (window.__lenis) window.__lenis.start();
     });
@@ -208,7 +182,6 @@ function initMobileNav() {
     if (e.key === 'Escape' && drawer.classList.contains('open')) {
       toggleBtn.classList.remove('open');
       drawer.classList.remove('open');
-      toggleBtn.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
       if (window.__lenis) window.__lenis.start();
     }
@@ -312,11 +285,6 @@ function initCopyToClipboard() {
     return copied;
   }
 
-  // On a phone or tablet a tap should dial the number or open the mail app,
-  // not hijack the link. Copying is a desktop convenience, so it is only
-  // wired up where there is a mouse.
-  const canCopyOnClick = window.matchMedia('(pointer: fine)').matches;
-
   items.forEach((item) => {
     const track = item.querySelector('.contact-channel-text-track');
     const spans = track ? track.querySelectorAll('span') : [];
@@ -324,8 +292,6 @@ function initCopyToClipboard() {
     let resetTimer = null;
 
     item.addEventListener('click', async (e) => {
-      if (!canCopyOnClick) return;
-
       // Replace the tel:/mailto: navigation with a copy to the clipboard
       e.preventDefault();
 
