@@ -554,9 +554,10 @@ body.cursor-hover .cursor-dot {
 .marquee-track {
   display: flex;
   align-items: center;
-  gap: 72px;
   width: max-content;
-  animation: marqueeScroll 24s linear infinite;
+  /* One set of logos is 5 items. The shift below is exactly one set, so the
+     16s duration keeps the same pixels-per-second pace as the old 24s run. */
+  animation: marqueeScroll 16s linear infinite;
   /* Promote the track so the endless ticker runs on the compositor instead of
      repainting while the page scrolls underneath it */
   will-change: transform;
@@ -573,6 +574,12 @@ body.cursor-hover .cursor-dot {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  /* Spacing lives on the item rather than in a flex `gap`, so every logo set
+     has an identical width including its trailing space. That is what makes
+     a shift of exactly one set line up seamlessly; a flex gap leaves the
+     total width one gap short of a whole number of sets, which shows up as
+     the row emptying out halfway through each loop. */
+  margin-right: 72px;
   opacity: 0.65;
   filter: grayscale(100%) brightness(1.2);
   transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
@@ -595,7 +602,13 @@ body.cursor-hover .cursor-dot {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    /* The track holds four identical sets of logos. Shifting by exactly one
+       quarter lands the second set where the first began, so the loop is
+       invisible. Four sets also guarantee that, after the shift, the three
+       remaining sets are wider than the widest possible marquee strip
+       (1360px inside the 1440px page container), so the row never runs out
+       of logos at any screen width. */
+    transform: translateX(-25%);
   }
 }
 
