@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Lets the stylesheet know JS is running, so the intro loader is only
+       allowed to cover the page when the script that dismisses it exists. -->
+  <script>document.documentElement.classList.add('js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mahin - official website</title>
+  <meta name="description" content="the official creative portfolio of mahin, a multidisciplinary digital creative.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="assets/favicon-light.svg?v=3" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="assets/favicon-dark.svg?v=3" media="(prefers-color-scheme: dark)">
+  <!-- Connect to the font hosts before the stylesheets load: the typefaces are
+       the entire design, and discovering them late painted a fallback face
+       first on every visit. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body id="top">
+
+  <!-- Interactive Custom Cursor -->
+  <div class="cursor-dot"></div>
+
+  <!-- Interactive Screen Loader -->
+  <div class="site-loader" id="siteLoader" aria-hidden="true">
+    <div class="loader-content">
+      <div class="loader-number" id="loaderNumber">0%</div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar" id="loaderBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-Width Top Bar Navigation -->
+  <nav class="navbar" aria-label="Main Navigation">
+    <a href="index.html" class="navbar-logo" aria-label="mahin logo">
+      <span class="navbar-logo-text">mahin™</span>
+    </a>
+    <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Full-Screen Navigation Drawer -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <a href="index.html" class="nav-link active">Home</a>
+    <a href="gallery.html" class="nav-link">Gallery</a>
+    <a href="work.html" class="nav-link">Work</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section" aria-label="Hero">
+      <div class="hero-title-wrap">
+        <!-- Inline SVG so the loaded Host Grotesk font renders correctly -->
+        <svg class="hero-logo-svg" viewBox="0 0 1000 230" xmlns="http://www.w3.org/2000/svg" aria-label="mahin™" role="img">
+          <text
+            x="0" y="198"
+            font-family="'Host Grotesk', 'Inter', 'Arial Black', sans-serif"
+            font-weight="800"
+            font-size="215"
+            letter-spacing="-10"
+            textLength="870"
+            lengthAdjust="spacingAndGlyphs"
+            fill="white">mahin</text>
+          <text
+            x="880" y="92"
+            font-family="'Host Grotesk', 'Inter', sans-serif"
+            font-weight="700"
+            font-size="78"
+            fill="white">™</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about" aria-label="About Mahin">
+      <div class="page-container">
+        <div class="about-grid">
+          <div class="about-content">
+            <h1 class="about-heading">
+              Hey, I'm Mahin. I'm a multidisciplinary digital creative based in NEST+m High School.
+            </h1>
+            <p class="about-desc">
+              I work with brand identities, web presences, photography, and much more.
+            </p>
+            <div class="about-actions">
+              <a href="contact.html" class="rolling-btn" aria-label="Contact Mahin">
+                <div class="rolling-text-wrap">
+                  <div class="rolling-text-track">
+                    <span>CONTACT</span>
+                    <span>CONTACT</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Infinite Partner / Client Logo Marquee -->
+        <div class="marquee-container" aria-label="Collaborations and Projects">
+          <div class="marquee-track">
+            <!-- Set 1 -->
+            <div class="marquee-item"><img src="assets/logo1.png" alt="Partner Logo" width="512" height="268"></div>
+            <div class="marquee-item"><img src="assets/logo2.png" alt="Partner Logo" width="512" height="445"></div>
+            <div class="marquee-item"><img src="assets/logo3.png" alt="Partner Logo" width="472" height="512"></div>
+            <div class="marquee-item"><img src="assets/logo4.png" alt="Partner Logo" width="512" height="412"></div>
+            <div class="marquee-item"><img src="assets/logo5.png" alt="Partner Logo" width="253" height="273"></div>
+            <!-- Set 2 (duplication for infinite loop) -->
+            <div class="marquee-item"><img src="assets/logo1.png" alt="Partner Logo" width="512" height="268"></div>
+            <div class="marquee-item"><img src="assets/logo2.png" alt="Partner Logo" width="512" height="445"></div>
+            <div class="marquee-item"><img src="assets/logo3.png" alt="Partner Logo" width="472" height="512"></div>
+            <div class="marquee-item"><img src="assets/logo4.png" alt="Partner Logo" width="512" height="412"></div>
+            <div class="marquee-item"><img src="assets/logo5.png" alt="Partner Logo" width="253" height="273"></div>
+            <!-- Set 3 -->
+            <div class="marquee-item"><img src="assets/logo1.png" alt="Partner Logo" width="512" height="268"></div>
+            <div class="marquee-item"><img src="assets/logo2.png" alt="Partner Logo" width="512" height="445"></div>
+            <div class="marquee-item"><img src="assets/logo3.png" alt="Partner Logo" width="472" height="512"></div>
+            <div class="marquee-item"><img src="assets/logo4.png" alt="Partner Logo" width="512" height="412"></div>
+            <div class="marquee-item"><img src="assets/logo5.png" alt="Partner Logo" width="253" height="273"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Works Section -->
+    <section class="work-section" id="work" aria-label="Featured Works">
+      <div class="page-container">
+        <div class="work-header">
+          <h2 class="work-section-title">Featured Works™</h2>
+          <a href="work.html" class="rolling-btn" aria-label="See All Works">
+            <div class="rolling-text-wrap">
+              <div class="rolling-text-track">
+                <span>SEE WORKS</span>
+                <span>SEE WORKS</span>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="work-grid">
+          <!-- Card 1: Team Velox -->
+          <a href="work.html#team-velox" class="work-card">
+            <div class="work-card-media">
+              <img src="assets/team-velox.png" alt="Team Velox Identity Design" loading="lazy">
+            </div>
+            <div class="work-card-meta">
+              <span class="work-card-title">Team Velox</span>
+              <div class="work-card-right">
+                <span class="work-card-number">(01)</span>
+                <span class="work-card-tag">Identity Design</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Card 2: Empower-ED -->
+          <a href="work.html#empower-ed" class="work-card">
+            <div class="work-card-media">
+              <img src="assets/empower-ed.png" alt="Empower-ED Identity and Web Design" loading="lazy">
+            </div>
+            <div class="work-card-meta">
+              <span class="work-card-title">Empower-ED</span>
+              <div class="work-card-right">
+                <span class="work-card-number">(02)</span>
+                <span class="work-card-tag">Identity Design, Web Design</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="page-container">
+      <div class="footer-nav-grid">
+        <!-- Quick Links -->
+        <div class="footer-nav-col">
+          <span class="footer-nav-heading">Quick Links</span>
+          <div class="footer-links-row">
+            <a href="index.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Home,</span><span>Home,</span></div>
+              </div>
+            </a>
+            <a href="gallery.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Gallery,</span><span>Gallery,</span></div>
+              </div>
+            </a>
+            <a href="work.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Work,</span><span>Work,</span></div>
+              </div>
+            </a>
+            <a href="contact.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Contact</span><span>Contact</span></div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Networks -->
+        <div class="footer-nav-col">
+          <span class="footer-nav-heading">Networks</span>
+          <div class="footer-links-row">
+            <a href="https://www.instagram.com/42human/" target="_blank" rel="noopener noreferrer" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Instagram,</span><span>Instagram,</span></div>
+              </div>
+            </a>
+            <a href="mailto:mahinl5400@gmail.com" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Email</span><span>Email</span></div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-divider-line"></div>
+
+      <!-- Giant Inline SVG Footer Logo -->
+      <div class="footer-title-wrap">
+        <svg class="footer-logo-svg" viewBox="0 0 1000 185" xmlns="http://www.w3.org/2000/svg" aria-label="mahin™" role="img">
+          <text
+            x="0" y="158"
+            font-family="'Host Grotesk', 'Inter', 'Arial Black', sans-serif"
+            font-weight="800"
+            font-size="175"
+            textLength="870"
+            lengthAdjust="spacingAndGlyphs"
+            fill="white"
+            opacity="0.95">mahin</text>
+          <text
+            x="878" y="68"
+            font-family="'Host Grotesk', 'Inter', sans-serif"
+            font-weight="700"
+            font-size="62"
+            fill="white"
+            opacity="0.95">™</text>
+        </svg>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

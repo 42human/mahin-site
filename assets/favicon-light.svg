@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 536.87 536.87">
+  <!-- Ring -->
+  <circle cx="268.43" cy="268.43" r="242.35" fill="none" stroke="#000000" stroke-width="52"/>
+  <!-- Compact monoline M -->
+  <path d="M140 400 L140 152 L268 360 L396 152 L396 400" fill="none" stroke="#000000" stroke-width="52" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

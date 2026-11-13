@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Lets the stylesheet know JS is running, so the intro loader is only
+       allowed to cover the page when the script that dismisses it exists. -->
+  <script>document.documentElement.classList.add('js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mahin - work</title>
+  <meta name="description" content="Portfolio works by Mahin — brand identities, web design, photography and creative concepts.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="assets/favicon-light.svg?v=3" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="assets/favicon-dark.svg?v=3" media="(prefers-color-scheme: dark)">
+  <!-- Connect to the font hosts before the stylesheets load: the typefaces are
+       the entire design, and discovering them late painted a fallback face
+       first on every visit. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body id="top">
+
+  <!-- Interactive Custom Cursor -->
+  <div class="cursor-dot"></div>
+
+  <!-- Interactive Screen Loader -->
+  <div class="site-loader" id="siteLoader" aria-hidden="true">
+    <div class="loader-content">
+      <div class="loader-number" id="loaderNumber">0%</div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar" id="loaderBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-Width Top Bar Navigation -->
+  <nav class="navbar" aria-label="Main Navigation">
+    <a href="index.html" class="navbar-logo" aria-label="mahin logo">
+      <span class="navbar-logo-text">mahin™</span>
+    </a>
+    <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Full-Screen Navigation Drawer -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="gallery.html" class="nav-link">Gallery</a>
+    <a href="work.html" class="nav-link active">Work</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </div>
+
+  <main>
+    <section class="work-page-section" aria-label="Portfolio Works">
+      <div class="page-container">
+
+        <h1 class="work-page-heading">Featured Works™</h1>
+
+        <div class="work-showcase-grid">
+
+          <!-- Project 01: Team Velox -->
+          <article class="work-card" id="team-velox">
+            <div class="work-card-media">
+              <img src="assets/team-velox.png" alt="Team Velox Identity Design" loading="lazy">
+            </div>
+            <div class="work-card-meta">
+              <span class="work-card-title">Team Velox</span>
+              <div class="work-card-right">
+                <span class="work-card-number">(01)</span>
+                <span class="work-card-tag">Identity Design</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 02: Empower-ED -->
+          <article class="work-card" id="empower-ed">
+            <div class="work-card-media">
+              <img src="assets/empower-ed.png" alt="Empower-ED Identity and Web Design" loading="lazy">
+            </div>
+            <div class="work-card-meta">
+              <span class="work-card-title">Empower-ED</span>
+              <div class="work-card-right">
+                <span class="work-card-number">(02)</span>
+                <span class="work-card-tag">Identity Design, Web Design</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 03: SOMETHING BEAUTIFUL -->
+          <article class="work-card" id="something-beautiful">
+            <div class="work-card-media">
+              <img src="assets/project3.png" alt="SOMETHING BEAUTIFUL Creative Concept" loading="lazy">
+            </div>
+            <div class="work-card-meta">
+              <span class="work-card-title">SOMETHING BEAUTIFUL</span>
+              <div class="work-card-right">
+                <span class="work-card-number">(03)</span>
+                <span class="work-card-tag">Creative Concept</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 04: Connexus -->
+          <article class="work-card" id="connexus">
+            <div class="work-card-media">
+              <img src="assets/project4.png" alt="Connexus Identity Design" loading="lazy">
+            </div>
+            <div class="work-card-meta">
+              <span class="work-card-title">Connexus</span>
+              <div class="work-card-right">
+                <span class="work-card-number">(04)</span>
+                <span class="work-card-tag">Identity Design</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 05: Yutsfest -->
+          <article class="work-card" id="yutsfest">
+            <div class="work-card-media">
+              <img src="assets/project5.png" alt="Yutsfest Identity Design" loading="lazy">
+            </div>
+            <div class="work-card-meta">
+              <span class="work-card-title">Yutsfest</span>
+              <div class="work-card-right">
+                <span class="work-card-number">(05)</span>
+                <span class="work-card-tag">Identity Design</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="page-container">
+      <div class="footer-nav-grid">
+        <!-- Quick Links -->
+        <div class="footer-nav-col">
+          <span class="footer-nav-heading">Quick Links</span>
+          <div class="footer-links-row">
+            <a href="index.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Home,</span><span>Home,</span></div>
+              </div>
+            </a>
+            <a href="gallery.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Gallery,</span><span>Gallery,</span></div>
+              </div>
+            </a>
+            <a href="work.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Work,</span><span>Work,</span></div>
+              </div>
+            </a>
+            <a href="contact.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Contact</span><span>Contact</span></div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Networks -->
+        <div class="footer-nav-col">
+          <span class="footer-nav-heading">Networks</span>
+          <div class="footer-links-row">
+            <a href="https://www.instagram.com/42human/" target="_blank" rel="noopener noreferrer" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Instagram,</span><span>Instagram,</span></div>
+              </div>
+            </a>
+            <a href="mailto:mahinl5400@gmail.com" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Email</span><span>Email</span></div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-divider-line"></div>
+
+      <!-- Giant Inline SVG Footer Logo -->
+      <div class="footer-title-wrap">
+        <svg class="footer-logo-svg" viewBox="0 0 1000 185" xmlns="http://www.w3.org/2000/svg" aria-label="mahin™" role="img">
+          <text
+            x="0" y="158"
+            font-family="'Host Grotesk', 'Inter', 'Arial Black', sans-serif"
+            font-weight="800"
+            font-size="175"
+            textLength="870"
+            lengthAdjust="spacingAndGlyphs"
+            fill="white"
+            opacity="0.95">mahin</text>
+          <text
+            x="878" y="68"
+            font-family="'Host Grotesk', 'Inter', sans-serif"
+            font-weight="700"
+            font-size="62"
+            fill="white"
+            opacity="0.95">™</text>
+        </svg>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

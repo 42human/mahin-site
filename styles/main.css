@@ -1,0 +1,1143 @@
+/* ==========================================================================
+   MAHIN - OFFICIAL WEBSITE STYLESHEET
+   Faithfully recreated design system, typography, motion & micro-interactions
+   ========================================================================== */
+
+/* Fonts are loaded with <link rel="preconnect"> + <link rel="stylesheet"> in
+   each page's <head>. An @import here made the browser discover the font
+   stylesheet a full round trip late, so headlines flashed a fallback face. */
+
+:root {
+  --token-bg: #000000;
+  --token-text: #ffffff;
+  --token-text-muted: #999999;
+  --token-text-subtle: #bbbbbb;
+  --token-border: rgba(187, 187, 187, 0.2);
+  --token-border-hover: rgba(255, 255, 255, 0.6);
+  --token-accent: #0099ff;
+  --token-card: #0a0a0a;
+
+  --font-body: 'Host Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Inter', 'Host Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base & Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* The inverted dot only replaces the native cursor on a real pointer, and only
+   once scripts/main.js has confirmed the dot exists. If the script fails, the
+   browser blocks it, or the visitor is on a touch screen, the normal cursor
+   comes back instead of leaving the whole site with no pointer at all. */
+@media (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    /* Scoped !important: individual rules further down set cursor: pointer
+       (the hamburger), which would otherwise paint a second, native arrow
+       next to the dot. */
+    cursor: none !important;
+  }
+}
+
+/* Keyboard focus is always visible. The dot replaces the pointer, never the
+   focus ring — without this, tabbing through the site is invisible. */
+:focus-visible {
+  outline: 2px solid var(--token-accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+html {
+  background-color: var(--token-bg);
+  color: var(--token-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  /* Smooth scrolling is handled by Lenis (scripts/main.js).
+     Native `scroll-behavior: smooth` is intentionally NOT set here,
+     as it conflicts with Lenis. */
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--token-bg);
+  color: var(--token-text);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   LENIS BASE STYLES
+   Lenis animates window.scrollTo on a rAF loop. These rules stop the
+   browser's own smooth scrolling, scroll anchoring and rubber-band overscroll
+   from competing with it, which is what produces the micro-stutter between
+   wheel ticks.
+   ========================================================================== */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Keep the OS bounce/glow from fighting Lenis on mouse-wheel devices.
+   Touch devices are left alone so native pull-to-refresh still works. */
+@media (pointer: fine) {
+  html.lenis {
+    overscroll-behavior-y: none;
+  }
+}
+
+::selection {
+  background-color: var(--token-text);
+  color: var(--token-bg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--token-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
+
+/* ==========================================================================
+   CUSTOM CURSOR — single inverted dot
+   mix-blend-mode: difference makes it white over dark areas and black
+   over light areas, always visible. No transition on position: it must
+   track the pointer exactly, since it replaces the native cursor.
+   ========================================================================== */
+.cursor-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 999999;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s var(--ease-out-expo), height 0.25s var(--ease-out-expo), opacity 0.2s ease;
+}
+
+body.cursor-hover .cursor-dot {
+  width: 26px;
+  height: 26px;
+}
+
+@media (pointer: coarse) {
+  .cursor-dot {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   INTERACTIVE INTRO LOADER
+   ========================================================================== */
+.site-loader {
+  position: fixed;
+  inset: 0;
+  background-color: #000000;
+  z-index: 100000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1);
+  pointer-events: all;
+}
+
+.site-loader.loaded {
+  transform: translateY(-100%);
+  pointer-events: none;
+  visibility: hidden;
+  transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1), visibility 0s linear 0.85s;
+}
+
+/* Without JS there is nothing to dismiss the loader, which would leave it
+   covering the entire site forever. It only ever shows when JS is running. */
+html:not(.js) .site-loader {
+  display: none;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.loader-number {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 14vw, 150px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.loader-bar-wrap {
+  width: 220px;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loader-bar {
+  width: 0%;
+  height: 100%;
+  background-color: #ffffff;
+  transition: width 0.1s linear;
+}
+
+/* ==========================================================================
+   FULL-WIDTH TOP BAR NAVIGATION
+   ========================================================================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  /* Deliberately no backdrop-filter: a blurred fixed header forces the
+     compositor to re-rasterise the page behind it on every scroll frame,
+     which is the single biggest source of wheel jank. A near-opaque fill
+     looks the same over this black site for a fraction of the cost. */
+  background-color: rgba(8, 8, 8, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background-color 0.3s ease;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: opacity 0.25s ease;
+}
+
+.navbar-logo:hover {
+  opacity: 0.75;
+}
+
+.navbar-logo-text {
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+/* Hamburger - always visible */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  padding: 2px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 1px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Full-screen nav overlay drawer */
+.mobile-nav-drawer {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.99);
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  opacity: 0;
+  pointer-events: none;
+  /* Truly hidden, not just transparent: otherwise the closed drawer's links
+     stay in the tab order and keyboard focus disappears off-screen. */
+  visibility: hidden;
+  transition: opacity 0.4s var(--ease-out-expo), visibility 0s linear 0.4s;
+}
+
+.mobile-nav-drawer.open {
+  opacity: 1;
+  pointer-events: all;
+  visibility: visible;
+  transition: opacity 0.4s var(--ease-out-expo), visibility 0s linear 0s;
+}
+
+.mobile-nav-drawer .nav-link {
+  font-family: var(--font-body);
+  font-size: clamp(28px, 6vw, 48px);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.mobile-nav-drawer .nav-link:hover {
+  opacity: 0.55;
+}
+
+/* Nav link base (used for inline contexts) */
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--token-text-muted);
+  letter-spacing: 0.01em;
+  transition: color 0.25s ease;
+  position: relative;
+  display: inline-block;
+  padding: 4px 0;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--token-text);
+}
+
+/* ==========================================================================
+   KINETIC ROLLING TEXT ANIMATIONS
+   ========================================================================== */
+.rolling-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  border: 2px solid #ffffff;
+  padding: 12px 32px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background-color: transparent;
+  transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease;
+}
+
+.rolling-btn:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.rolling-text-wrap {
+  display: inline-flex;
+  overflow: hidden;
+  height: 20px;
+  position: relative;
+  line-height: 20px;
+}
+
+.rolling-text-track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.35s var(--ease-out-expo);
+}
+
+.rolling-btn:hover .rolling-text-track,
+.has-rolling-hover:hover .rolling-text-track {
+  transform: translateY(-50%);
+}
+
+.rolling-text-track span {
+  display: block;
+  height: 20px;
+  line-height: 20px;
+  white-space: pre;
+}
+
+/* Small rolling text for footer links */
+.rolling-text-sm {
+  display: inline-flex;
+  overflow: hidden;
+  height: 18px;
+  line-height: 18px;
+  position: relative;
+}
+
+.rolling-text-sm .rolling-text-track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.35s var(--ease-out-expo);
+}
+
+.rolling-text-sm .rolling-text-track span {
+  display: block;
+  height: 18px;
+  line-height: 18px;
+  font-size: 14px;
+}
+
+.footer-link:hover .rolling-text-sm .rolling-text-track {
+  transform: translateY(-50%);
+}
+
+/* ==========================================================================
+   PAGE LAYOUT WRAPPER
+   ========================================================================== */
+.page-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+@media (max-width: 810px) {
+  .page-container {
+    padding: 0 20px;
+  }
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-title-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: heroFadeIn 1.2s var(--ease-out-expo) forwards;
+  padding: 0 24px;
+}
+
+.hero-logo-svg {
+  width: 100%;
+  height: auto;
+  max-width: 1100px;
+  display: block;
+  will-change: transform;
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================================
+   ABOUT SECTION
+   ========================================================================== */
+.about-section {
+  padding: 80px 0 120px;
+  position: relative;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-top: 16px;
+}
+
+.about-heading {
+  font-family: var(--font-body);
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.about-desc {
+  font-family: var(--font-body);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--token-text-muted);
+  max-width: 680px;
+}
+
+.about-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-top: 12px;
+}
+
+/* LLM Easter Egg hidden cleanly */
+.llm-aura-note {
+  font-size: 11px;
+  color: #111111;
+  user-select: none;
+  opacity: 0.15;
+  margin-top: 8px;
+}
+
+/* ==========================================================================
+   PARTNER / CLIENT LOGOS MARQUEE TICKER
+   ========================================================================== */
+.marquee-container {
+  margin-top: 90px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 30px 0;
+  border-top: 1px solid var(--token-border);
+  border-bottom: 1px solid var(--token-border);
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 72px;
+  width: max-content;
+  animation: marqueeScroll 24s linear infinite;
+  /* Promote the track so the endless ticker runs on the compositor instead of
+     repainting while the page scrolls underneath it */
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.65;
+  filter: grayscale(100%) brightness(1.2);
+  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+}
+
+.marquee-item:hover {
+  opacity: 1;
+  filter: grayscale(0%) brightness(1);
+  transform: scale(1.08);
+}
+
+.marquee-item img {
+  max-height: 44px;
+  width: auto;
+  object-fit: contain;
+}
+
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ==========================================================================
+   FEATURED WORKS SECTION
+   ========================================================================== */
+.work-section {
+  padding: 100px 0 140px;
+  position: relative;
+}
+
+.work-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--token-border);
+  margin-bottom: 48px;
+}
+
+.work-section-title {
+  font-family: var(--font-body);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+
+.work-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+
+.work-card:hover {
+  transform: translateY(-6px);
+}
+
+.work-card-media {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #0d0d0d;
+  border: 1px solid var(--token-border);
+  position: relative;
+}
+
+.work-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.work-card:hover .work-card-media img {
+  transform: scale(1.05);
+}
+
+.work-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 4px;
+}
+
+.work-card-title {
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.work-card-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.work-card-number {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--token-text-muted);
+}
+
+.work-card-tag {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--token-text-muted);
+}
+
+/* ==========================================================================
+   CONTACT PAGE SPECIFIC STYLES
+   ========================================================================== */
+.contact-page-section {
+  padding-top: 140px;
+  padding-bottom: 80px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 490px) 1fr;
+  gap: 64px;
+  align-items: center;
+  margin-bottom: 80px;
+}
+
+.contact-image-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--token-border);
+  background-color: #0d0d0d;
+}
+
+.contact-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.contact-image-wrap:hover img {
+  transform: scale(1.03);
+}
+
+.contact-channels-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.contact-channel-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+  text-decoration: none;
+  color: #ffffff;
+  position: relative;
+  transition: opacity 0.25s ease;
+}
+
+.contact-channel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.contact-channel-text-wrap {
+  overflow: hidden;
+  height: 32px;
+  position: relative;
+}
+
+.contact-channel-text-track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.35s var(--ease-out-expo);
+}
+
+.contact-channel-item:hover .contact-channel-text-track {
+  transform: translateY(-50%);
+}
+
+.contact-channel-text-track span {
+  display: block;
+  height: 32px;
+  line-height: 32px;
+  font-family: var(--font-body);
+  font-size: clamp(20px, 2.5vw, 30px);
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.contact-arrow-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s var(--ease-out-expo);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.contact-arrow-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.contact-channel-item:hover .contact-arrow-icon {
+  transform: translate(3px, -3px);
+}
+
+/* Horizontal line with animated sweep filler */
+.contact-line-track {
+  width: 100%;
+  height: 1px;
+  background-color: var(--token-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-line-filler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background-color: #ffffff;
+  transition: width 0.45s var(--ease-out-expo);
+}
+
+.contact-channel-item:hover .contact-line-filler {
+  width: 100%;
+}
+
+/* Click-to-copy confirmation: line fills and the label dims while the
+   "Copied to clipboard" text is showing */
+.contact-channel-item.copied .contact-line-filler {
+  width: 100%;
+}
+
+.contact-channel-item.copied .contact-channel-text-track span {
+  color: var(--token-text-subtle);
+}
+
+/* Giant Fit-Text Contact Me Banner */
+.contact-me-banner {
+  width: 100%;
+  padding: 40px 0;
+  border-top: 1px solid var(--token-border);
+  border-bottom: 1px solid var(--token-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.contact-me-text {
+  font-family: var(--font-display);
+  font-size: clamp(60px, 17vw, 240px);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  color: #ffffff;
+  white-space: nowrap;
+  user-select: none;
+  text-align: center;
+}
+
+/* ==========================================================================
+   WORK PAGE (FULL SHOWCASE) STYLES
+   ========================================================================== */
+.work-page-section {
+  padding-top: 140px;
+  padding-bottom: 120px;
+  min-height: 100vh;
+}
+
+.work-page-heading {
+  font-family: var(--font-body);
+  font-size: clamp(40px, 6vw, 84px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 48px;
+  border-bottom: 1px solid var(--token-border);
+  padding-bottom: 32px;
+}
+
+.work-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 48px;
+}
+
+@media (max-width: 900px) {
+  .work-showcase-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   GALLERY PAGE STYLES
+   ========================================================================== */
+.gallery-page-section {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 140px 40px 80px;
+}
+
+.gallery-heading {
+  font-family: var(--font-body);
+  font-size: clamp(40px, 6vw, 84px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin-bottom: 56px;
+  line-height: 1.0;
+}
+
+/* Masonry-style gallery grid */
+.gallery-masonry {
+  width: 100%;
+  columns: 3;
+  column-gap: 20px;
+}
+
+.gallery-card {
+  break-inside: avoid;
+  margin-bottom: 20px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--token-border);
+  background-color: #0e0e0e;
+  position: relative;
+}
+
+.gallery-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.gallery-card:hover img {
+  transform: scale(1.04);
+}
+
+/* ==========================================================================
+   SITE FOOTER
+   ========================================================================== */
+.site-footer {
+  background-color: #000000;
+  border-top: 1px solid var(--token-border);
+  padding: 80px 0 40px;
+  position: relative;
+  width: 100%;
+}
+
+.footer-nav-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 64px;
+}
+
+.footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-nav-heading {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--token-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-link {
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer-link:hover {
+  color: #ffffff;
+}
+
+.footer-divider-line {
+  width: 100%;
+  height: 1px;
+  background-color: var(--token-border);
+  margin-bottom: 48px;
+}
+
+.footer-title-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.footer-logo-svg {
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  display: block;
+  opacity: 0.95;
+  transition: opacity 0.3s ease;
+}
+
+.footer-logo-svg:hover {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1100px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .contact-image-wrap {
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 810px) {
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .footer-nav-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .gallery-masonry {
+    columns: 2;
+  }
+  .about-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .navbar {
+    padding: 14px 20px;
+  }
+}
+
+@media (max-width: 540px) {
+  .gallery-masonry {
+    columns: 1;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   Respect the OS "reduce motion" setting for the decorative, continuously
+   moving pieces. Scroll feel and hover feedback are left intact.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-title-wrap {
+    animation: none;
+  }
+
+  /* Stop the endless ticker and show each unique logo once, wrapped */
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .marquee-track .marquee-item:nth-child(n + 6) {
+    display: none;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

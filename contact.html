@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Lets the stylesheet know JS is running, so the intro loader is only
+       allowed to cover the page when the script that dismisses it exists. -->
+  <script>document.documentElement.classList.add('js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mahin - contact</title>
+  <meta name="description" content="Get in touch with Mahin — available via Instagram, phone, and email.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="assets/favicon-light.svg?v=3" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="assets/favicon-dark.svg?v=3" media="(prefers-color-scheme: dark)">
+  <!-- Connect to the font hosts before the stylesheets load: the typefaces are
+       the entire design, and discovering them late painted a fallback face
+       first on every visit. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body id="top">
+
+  <!-- Interactive Custom Cursor -->
+  <div class="cursor-dot"></div>
+
+  <!-- Interactive Screen Loader -->
+  <div class="site-loader" id="siteLoader" aria-hidden="true">
+    <div class="loader-content">
+      <div class="loader-number" id="loaderNumber">0%</div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar" id="loaderBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-Width Top Bar Navigation -->
+  <nav class="navbar" aria-label="Main Navigation">
+    <a href="index.html" class="navbar-logo" aria-label="mahin logo">
+      <span class="navbar-logo-text">mahin™</span>
+    </a>
+    <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Full-Screen Navigation Drawer -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="gallery.html" class="nav-link">Gallery</a>
+    <a href="work.html" class="nav-link">Work</a>
+    <a href="contact.html" class="nav-link active">Contact</a>
+  </div>
+
+  <main>
+    <section class="contact-page-section" aria-label="Contact Mahin">
+      <div class="page-container">
+
+        <!-- Contact Split Layout (Image + Links) -->
+        <div class="contact-layout">
+          <!-- Left: Framed Artwork / Image -->
+          <div class="contact-image-wrap">
+            <img src="assets/team-velox.png" alt="Mahin — creative work" loading="lazy">
+          </div>
+
+          <!-- Right: Interactive Channel Links -->
+          <div class="contact-channels-list">
+
+            <!-- Channel 1: Instagram -->
+            <a href="https://www.instagram.com/42human/" target="_blank" rel="noopener noreferrer" class="contact-channel-item" aria-label="Instagram">
+              <div class="contact-channel-row">
+                <div class="contact-channel-text-wrap">
+                  <div class="contact-channel-text-track">
+                    <span>Instagram — 42human</span>
+                    <span>Instagram — 42human</span>
+                  </div>
+                </div>
+                <div class="contact-arrow-icon" aria-hidden="true">
+                  <img src="assets/arrow.svg" alt="" style="width: 20px; height: 20px; filter: invert(1);">
+                </div>
+              </div>
+              <div class="contact-line-track">
+                <div class="contact-line-filler"></div>
+              </div>
+            </a>
+
+            <!-- Channel 2: Phone -->
+            <a href="tel:+15166803693" class="contact-channel-item" data-copy="+1 516-680-3693" aria-label="Copy phone number">
+              <div class="contact-channel-row">
+                <div class="contact-channel-text-wrap">
+                  <div class="contact-channel-text-track">
+                    <span>+1 516-680-3693</span>
+                    <span>+1 516-680-3693</span>
+                  </div>
+                </div>
+                <div class="contact-arrow-icon" aria-hidden="true">
+                  <img src="assets/arrow.svg" alt="" style="width: 20px; height: 20px; filter: invert(1);">
+                </div>
+              </div>
+              <div class="contact-line-track">
+                <div class="contact-line-filler"></div>
+              </div>
+            </a>
+
+            <!-- Channel 3: Email -->
+            <a href="mailto:mahinl5400@gmail.com" class="contact-channel-item" data-copy="mahinl5400@gmail.com" aria-label="Copy email address">
+              <div class="contact-channel-row">
+                <div class="contact-channel-text-wrap">
+                  <div class="contact-channel-text-track">
+                    <span>mahinl5400@gmail.com</span>
+                    <span>mahinl5400@gmail.com</span>
+                  </div>
+                </div>
+                <div class="contact-arrow-icon" aria-hidden="true">
+                  <img src="assets/arrow.svg" alt="" style="width: 20px; height: 20px; filter: invert(1);">
+                </div>
+              </div>
+              <div class="contact-line-track">
+                <div class="contact-line-filler"></div>
+              </div>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Giant Fit-Text Contact Me Banner -->
+        <!-- This banner is the page's only heading, so it must not be hidden
+             from screen readers — that left the page effectively untitled. -->
+        <div class="contact-me-banner">
+          <h1 class="contact-me-text">Contact Me</h1>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="page-container">
+      <div class="footer-nav-grid">
+        <!-- Quick Links -->
+        <div class="footer-nav-col">
+          <span class="footer-nav-heading">Quick Links</span>
+          <div class="footer-links-row">
+            <a href="index.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Home,</span><span>Home,</span></div>
+              </div>
+            </a>
+            <a href="gallery.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Gallery,</span><span>Gallery,</span></div>
+              </div>
+            </a>
+            <a href="work.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Work,</span><span>Work,</span></div>
+              </div>
+            </a>
+            <a href="contact.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Contact</span><span>Contact</span></div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Networks -->
+        <div class="footer-nav-col">
+          <span class="footer-nav-heading">Networks</span>
+          <div class="footer-links-row">
+            <a href="https://www.instagram.com/42human/" target="_blank" rel="noopener noreferrer" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Instagram,</span><span>Instagram,</span></div>
+              </div>
+            </a>
+            <a href="mailto:mahinl5400@gmail.com" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Email</span><span>Email</span></div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-divider-line"></div>
+
+      <!-- Giant Inline SVG Footer Logo -->
+      <div class="footer-title-wrap">
+        <svg class="footer-logo-svg" viewBox="0 0 1000 185" xmlns="http://www.w3.org/2000/svg" aria-label="mahin™" role="img">
+          <text
+            x="0" y="158"
+            font-family="'Host Grotesk', 'Inter', 'Arial Black', sans-serif"
+            font-weight="800"
+            font-size="175"
+            textLength="870"
+            lengthAdjust="spacingAndGlyphs"
+            fill="white"
+            opacity="0.95">mahin</text>
+          <text
+            x="878" y="68"
+            font-family="'Host Grotesk', 'Inter', sans-serif"
+            font-weight="700"
+            font-size="62"
+            fill="white"
+            opacity="0.95">™</text>
+        </svg>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

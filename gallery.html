@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Lets the stylesheet know JS is running, so the intro loader is only
+       allowed to cover the page when the script that dismisses it exists. -->
+  <script>document.documentElement.classList.add('js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mahin - gallery</title>
+  <meta name="description" content="Gallery by Mahin — a visual collection of creative works and photography.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="assets/favicon-light.svg?v=3" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="assets/favicon-dark.svg?v=3" media="(prefers-color-scheme: dark)">
+  <!-- Connect to the font hosts before the stylesheets load: the typefaces are
+       the entire design, and discovering them late painted a fallback face
+       first on every visit. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body id="top">
+
+  <!-- Interactive Custom Cursor -->
+  <div class="cursor-dot"></div>
+
+  <!-- Interactive Screen Loader -->
+  <div class="site-loader" id="siteLoader" aria-hidden="true">
+    <div class="loader-content">
+      <div class="loader-number" id="loaderNumber">0%</div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar" id="loaderBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-Width Top Bar Navigation -->
+  <nav class="navbar" aria-label="Main Navigation">
+    <a href="index.html" class="navbar-logo" aria-label="mahin logo">
+      <span class="navbar-logo-text">mahin™</span>
+    </a>
+    <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Full-Screen Navigation Drawer -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="gallery.html" class="nav-link active">Gallery</a>
+    <a href="work.html" class="nav-link">Work</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </div>
+
+  <main>
+    <section class="gallery-page-section" aria-label="Gallery">
+      <h1 class="gallery-heading">Visual Works</h1>
+
+      <!-- Masonry Gallery Grid -->
+      <div class="gallery-masonry">
+
+        <div class="gallery-card">
+          <img src="assets/team-velox.png" alt="Team Velox — Identity Design" width="1024" height="1024" loading="lazy">
+        </div>
+
+        <div class="gallery-card">
+          <img src="assets/project3.png" alt="SOMETHING BEAUTIFUL — Creative Concept" width="1024" height="1024" loading="lazy">
+        </div>
+
+        <div class="gallery-card">
+          <img src="assets/empower-ed.png" alt="Empower-ED — Identity and Web Design" width="768" height="1024" loading="lazy">
+        </div>
+
+        <div class="gallery-card">
+          <img src="assets/project5.png" alt="Yutsfest — Identity Design" width="1024" height="853" loading="lazy">
+        </div>
+
+        <div class="gallery-card">
+          <img src="assets/team-velox.png" alt="Team Velox — detail" width="1024" height="1024" loading="lazy">
+        </div>
+
+        <div class="gallery-card">
+          <img src="assets/empower-ed.png" alt="Empower-ED — detail" width="768" height="1024" loading="lazy">
+        </div>
+
+        <div class="gallery-card">
+          <img src="assets/project3.png" alt="SOMETHING BEAUTIFUL — detail" width="1024" height="1024" loading="lazy">
+        </div>
+
+        <div class="gallery-card">
+          <img src="assets/project5.png" alt="Yutsfest — detail" width="1024" height="853" loading="lazy">
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="page-container">
+      <div class="footer-nav-grid">
+        <!-- Quick Links -->
+        <div class="footer-nav-col">
+          <span class="footer-nav-heading">Quick Links</span>
+          <div class="footer-links-row">
+            <a href="index.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Home,</span><span>Home,</span></div>
+              </div>
+            </a>
+            <a href="gallery.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Gallery,</span><span>Gallery,</span></div>
+              </div>
+            </a>
+            <a href="work.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Work,</span><span>Work,</span></div>
+              </div>
+            </a>
+            <a href="contact.html" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Contact</span><span>Contact</span></div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Networks -->
+        <div class="footer-nav-col">
+          <span class="footer-nav-heading">Networks</span>
+          <div class="footer-links-row">
+            <a href="https://www.instagram.com/42human/" target="_blank" rel="noopener noreferrer" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Instagram,</span><span>Instagram,</span></div>
+              </div>
+            </a>
+            <a href="mailto:mahinl5400@gmail.com" class="footer-link">
+              <div class="rolling-text-sm">
+                <div class="rolling-text-track"><span>Email</span><span>Email</span></div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-divider-line"></div>
+
+      <!-- Giant Inline SVG Footer Logo -->
+      <div class="footer-title-wrap">
+        <svg class="footer-logo-svg" viewBox="0 0 1000 185" xmlns="http://www.w3.org/2000/svg" aria-label="mahin™" role="img">
+          <text
+            x="0" y="158"
+            font-family="'Host Grotesk', 'Inter', 'Arial Black', sans-serif"
+            font-weight="800"
+            font-size="175"
+            textLength="870"
+            lengthAdjust="spacingAndGlyphs"
+            fill="white"
+            opacity="0.95">mahin</text>
+          <text
+            x="878" y="68"
+            font-family="'Host Grotesk', 'Inter', sans-serif"
+            font-weight="700"
+            font-size="62"
+            fill="white"
+            opacity="0.95">™</text>
+        </svg>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>
